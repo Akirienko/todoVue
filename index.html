@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="theme.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <!-- <div class="container pt-5" id="app">
+    <div class="card center">
+      <h1>{{title}}: {{ counter }}</h1>
+      <div>
+        <button class="btn primory" v-on:click="counter++">+</button>
+        <button class="btn danger" v-on:click="counter = counter -1">-</button>
+      </div>
+    </div>
+  </div> -->
+
+
+  <!-- 
+    v-on, v-bind, v-for = Это все директивы
+
+
+    v-for - создает цыкл(повторения)
+   -->
+  <div class="container" id="app">
+    <div class="card">
+      <h1 :style="{color: inputValue.length < 5 ? 'green' : 'blue'}">{{title}}</h1>
+      <div class="form-control">
+        <!-- 
+          мы также можем писать сокращенно 
+          v-bind: = :
+          v-on: = @
+         -->
+        <input 
+          type="text" 
+          v-bind:placeholder="placeholderString" 
+          v-model="inputValue"
+          
+          v-on:keypress.enter="addNewNote"
+          
+        />
+      </div>
+      <!-- !!!!!  
+        v-model='inputValue' 
+        заменяет нам 
+        
+        v-bind:value="inputValue"  
+        v-on:input="inputChangeHandler" 
+      
+      
+      
+      -->
+      <!-- <h2>inputValue: {{inputValue}} </h2> Выводим значение инпута --> 
+      <button class="btn" @click="addNewNote">add</button>
+      <hr />
+      <ul class="list" v-if="notes.length !== 0">
+        <!-- Цыкл\вывод всех существуемых или нов. добавленых елементов -->
+        <li class="list-item" v-for="(myNote, idx) in notes">
+           <!-- 
+             myNote = это просто переменная которую мы создаем в HTML
+             notes = это наш ключь который мы создали в JS 
+             in/of = это одно и тоже из какого масива я хочу использовать иттерацию
+          -->
+          <span :class="myNote.length < 10 ? 'primary' : 'bold'">({{ idx+1 }}){{ toUpperCase(myNote) }}</span>
+          <!-- $event - спец назв для вью кторое поймет что мы хотим получить именно браузерное событие -->
+          <button class="btn danger" v-on:click="deleteNote(idx, $event)">Delete</button>
+        </li>
+        <hr />
+        <li>
+          <strong>Total amount : {{notes.length }}</strong>
+        </li>
+      </ul>
+      <div v-if="notes.length === 0">NO task</div>
+    </div>
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+</html>
